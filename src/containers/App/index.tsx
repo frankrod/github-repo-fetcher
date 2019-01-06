@@ -1,20 +1,22 @@
 import React from 'react';
 
 import { get } from '../../utils/request';
+import Card from '../../components/Card';
+import Search from '../../components/Search';
 import './App.css';
 
 interface State {
   searchCriteria: string;
-  repositories: object;
+  repositories: object[];
 }
 
 class App extends React.Component<{}, State> {
   state = {
     searchCriteria: '',
-    repositories: {},
+    repositories: [],
   };
 
-  handleSearchCriteria = (e: React.ChangeEvent<HTMLInputElement>) => {
+  handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchCriteria: e.target.value });
   };
 
@@ -22,31 +24,35 @@ class App extends React.Component<{}, State> {
     const response = await get(
       `search/repositories?q=${this.state.searchCriteria}`,
     );
-    this.setState({ repositories: response });
+    this.setState({ repositories: response.items.slice(0, 6) });
   };
 
   render() {
-    const { searchCriteria } = this.state;
+    const { searchCriteria, repositories } = this.state;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <label htmlFor="search-criteria">Search</label>
-          <input
-            id="search-criteria"
-            type="text"
-            placeholder="react:javacript"
-            onChange={this.handleSearchCriteria}
-            value={searchCriteria}
+        <header className="header">
+          <Search
+            handleOnChange={this.handleOnChange}
+            handleSearch={this.handleSearch}
+            searchCriteria={searchCriteria}
           />
-          <button
-            data-testid="search-btn"
-            onClick={this.handleSearch}
-            disabled={!searchCriteria}
-          >
-            {' '}
-            Search{' '}
-          </button>
         </header>
+        <main className="container">
+          {repositories.map((item: any) => (
+            <div key={item.id} className="item">
+              <Card
+                title={item.full_name}
+                subtitle={item.language}
+                description={item.description}
+                link={item.html_url}
+                stars={item.stargazers_count.toLocaleString()}
+                issues={item.open_issues.toLocaleString()}
+              />
+            </div>
+          ))}
+        </main>
       </div>
     );
   }

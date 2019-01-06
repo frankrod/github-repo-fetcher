@@ -1,0 +1,42 @@
+.card-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #fff;
+  box-shadow: 0px 1px 1px 1px rgba(50, 50, 50, 0.75);
+  width: 500px;
+  height: 230px;
+}
+
+.card-container p {
+  text-align: left;
+  margin: 10px 0 0 20px;
+}
+
+.card-container .repository-contributors {
+  text-align: right;
+  margin: 70px 50px 0 0;
+}
+
+.repository-name {
+  font-size: 30px;
+  text-align: left;
+  margin: 10px 0 0 20px;
+  color: green;
+}
+
+.repository-language {
+  font-size: 15px;
+}
+
+.repository-description {
+  font-size: 20px;
+  height: 20px;
+}
+
+.card-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid gray;
+  box-shadow: 0px -1px 1px rgba(50, 50, 50, 0.75);
+}
