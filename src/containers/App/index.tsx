@@ -4,16 +4,19 @@ import { get } from '../../utils/request';
 import Card from '../../components/Card';
 import Search from '../../components/Search';
 import './App.css';
+import { RouteComponentProps, navigate } from '@reach/router';
 
 interface State {
   searchCriteria: string;
   repositories: object[];
+  perPage: number;
 }
 
-class App extends React.Component<{}, State> {
-  state = {
+class App extends React.Component<RouteComponentProps, State> {
+  state: Readonly<State> = {
     searchCriteria: '',
     repositories: [],
+    perPage: 6,
   };
 
   handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,10 +24,11 @@ class App extends React.Component<{}, State> {
   };
 
   handleSearch = async () => {
+    const { searchCriteria, perPage } = this.state;
     const response = await get(
-      `search/repositories?q=${this.state.searchCriteria}`,
+      `search/repositories?q=${searchCriteria}&per_page=${perPage}`,
     );
-    this.setState({ repositories: response.items.slice(0, 6) });
+    this.setState({ repositories: response.items });
   };
 
   render() {
@@ -49,6 +53,7 @@ class App extends React.Component<{}, State> {
                 link={item.html_url}
                 stars={item.stargazers_count.toLocaleString()}
                 issues={item.open_issues.toLocaleString()}
+                contributorsUrl={item.contributors_url}
               />
             </div>
           ))}

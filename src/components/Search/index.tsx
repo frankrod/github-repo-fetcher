@@ -15,6 +15,7 @@ const Search: React.FunctionComponent<Props> = ({
 }) => (
   <>
     <input
+      className="search-input"
       id="search-criteria"
       type="text"
       placeholder="Search Github Repos"
@@ -22,6 +23,7 @@ const Search: React.FunctionComponent<Props> = ({
       value={searchCriteria}
     />
     <button
+      className="search-button"
       data-testid="search-btn"
       onClick={handleSearch}
       disabled={!searchCriteria}

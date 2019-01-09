@@ -4,4 +4,10 @@ async function get(endpoint: string) {
   return response.json();
 }
 
-export { get };
+async function getWithHeaders(url: string) {
+  const response = await fetch(url);
+  if (response.status >= 400) throw response;
+  return response;
+}
+
+export { get, getWithHeaders };

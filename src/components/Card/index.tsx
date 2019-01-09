@@ -1,5 +1,6 @@
 import React from 'react';
 import { GoStar, GoIssueOpened } from 'react-icons/go';
+import { Link } from '@reach/router';
 
 import './Card.css';
 
@@ -10,6 +11,7 @@ interface Props {
   link: string;
   stars: number;
   issues: number;
+  contributorsUrl: string;
 }
 
 const Card: React.FunctionComponent<Props> = ({
@@ -19,6 +21,7 @@ const Card: React.FunctionComponent<Props> = ({
   link,
   stars,
   issues,
+  contributorsUrl,
 }) => (
   <div className="card-container">
     <a className="repository-name" href={link}>
@@ -26,9 +29,13 @@ const Card: React.FunctionComponent<Props> = ({
     </a>
     <p className="repository-language"> {subtitle} </p>
     <p className="repository-description">{description}</p>
-    <a className="repository-contributors" href="#">
+    <Link
+      className="repository-contributors"
+      to="/contributors"
+      state={{ contributorsUrl }}
+    >
       Top contributors
-    </a>
+    </Link>
     <div className="card-footer">
       <span style={{ marginLeft: 10 }}>
         <GoStar style={{ verticalAlign: 'bottom' }} /> {stars}

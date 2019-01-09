@@ -1,0 +1,15 @@
+.top-contributors-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.load-more-button {
+  background-color: rgb(29, 172, 219);
+  border-radius: 10px;
+  width: 300px;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  font-size: 20px;
+  box-shadow: 1px 1px 10px rgb(29, 172, 219);
+}
