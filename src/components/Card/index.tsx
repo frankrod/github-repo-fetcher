@@ -32,7 +32,7 @@ const Card: React.FunctionComponent<Props> = ({
     <Link
       className="repository-contributors"
       to="/contributors"
-      state={{ contributorsUrl }}
+      state={{ contributorsUrl, repoName: title }}
     >
       Top contributors
     </Link>

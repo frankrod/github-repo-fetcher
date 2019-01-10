@@ -32,7 +32,7 @@ class Contributors extends React.Component<RouteComponentProps, State> {
     nextPage: 0,
     perPage: 10,
     loadMorePerPage: 5,
-    seeAnonContributors: true,
+    seeAnonContributors: false,
   };
 
   async componentDidMount() {
@@ -52,7 +52,7 @@ class Contributors extends React.Component<RouteComponentProps, State> {
     const response = await getWithHeaders(url);
     const linkHeader = response.headers.get('Link');
     const contributors: ContributorsType[] = await response.json();
-    console.log(contributors);
+
     if (!linkHeader) {
       this.setState(prevState => ({
         contributors: [...prevState.contributors, ...contributors],
@@ -76,27 +76,30 @@ class Contributors extends React.Component<RouteComponentProps, State> {
 
   handleLoadMore = async () => {
     const { parsed, loadMorePerPage } = this.state;
-    const url = parsed.next.url.replace(
+
+    let url = parsed.next.url.replace(
       'per_page=10',
       `per_page=${loadMorePerPage}`,
     );
+
+    url = url.replace('page=2', 'page=3');
 
     this.fetchContributors(url);
   };
 
   render() {
     const { contributors, nextPage, lastPage } = this.state;
-
+    const { location } = this.props;
+    if (!location) return null;
     return (
       <section className="top-contributors-container">
-        <h1> Top 10 Contributors for Repo Name </h1>
+        <h1> Top 10 Contributors for {location.state.repoName} </h1>
         {contributors.map(contributor => (
           <TopContributorsCard key={contributor.id} contributor={contributor} />
         ))}
         {lastPage !== nextPage && (
           <button className="load-more-button" onClick={this.handleLoadMore}>
-            {' '}
-            Load more{' '}
+            Load more
           </button>
         )}
       </section>

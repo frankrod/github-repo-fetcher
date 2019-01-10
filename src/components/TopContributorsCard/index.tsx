@@ -13,7 +13,7 @@ const TopContributorsCard: React.FunctionComponent<Props> = ({
     <img
       className="card-avatar"
       src={contributor.avatar_url}
-      alt="No avatar :("
+      alt="No avatar :( Anonymous User maybe?"
     />
     <a className="top-contributors-username" href={contributor.html_url}>
       {contributor.login}
